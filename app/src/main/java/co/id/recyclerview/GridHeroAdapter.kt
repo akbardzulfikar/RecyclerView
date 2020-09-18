@@ -18,7 +18,7 @@ class GridHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adap
 
     override fun getItemCount(): Int = listHero.size
 
-    class GridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class GridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(hero: Hero) {
             with(itemView) {
                 Glide.with(itemView.context)
