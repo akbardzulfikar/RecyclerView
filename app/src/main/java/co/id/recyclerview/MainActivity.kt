@@ -75,6 +75,12 @@ class MainActivity : AppCompatActivity() {
         rv_heroes.layoutManager = LinearLayoutManager(this)
         val cardViewHeroAdapter = CardViewHeroAdapter(list)
         rv_heroes.adapter = cardViewHeroAdapter
+
+        cardViewHeroAdapter.setOnItemClickCallback(object : CardViewHeroAdapter.OnItemClickCallback{
+            override fun onItemClicked(data: Hero) {
+                showSelectedHero(data)
+            }
+        })
     }
 
     private fun getListHeroes(): ArrayList<Hero> {
