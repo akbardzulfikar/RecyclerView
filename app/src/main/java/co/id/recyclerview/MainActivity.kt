@@ -14,15 +14,36 @@ class MainActivity : AppCompatActivity() {
 
     private var title = "Mode List"
 
+    private var mode: Int = 0
+
+    companion object {
+        private const val STATE_TITLE = "state_string"
+        private const val STATE_LIST = "state_list"
+        private const val STATE_MODE = "state_mode"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         rv_heroes.setHasFixedSize(true)
 
-        list.addAll(getListHeroes())
-        showRecyclerList()
-        setActionBarTitle(title)
+        if (savedInstanceState == null) {
+            setActionBarTitle(title)
+            list.addAll(getListHeroes())
+            showRecyclerList()
+            mode = R.id.action_list
+        } else {
+            title = savedInstanceState.getString(STATE_TITLE).toString()
+            val stateList = savedInstanceState.getParcelableArrayList<Hero>(STATE_LIST)
+            val stateMode = savedInstanceState.getInt(STATE_MODE)
+
+            setActionBarTitle(title)
+            if (stateList != null) {
+                list.addAll(stateList)
+            }
+            setMode(stateMode)
+        }
+
     }
 
     private fun showRecyclerList() {
@@ -60,6 +81,13 @@ class MainActivity : AppCompatActivity() {
         return listHero
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(STATE_TITLE, title)
+        outState.putParcelableArrayList(STATE_LIST, list)
+        outState.putInt(STATE_MODE, mode)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
@@ -85,6 +113,7 @@ class MainActivity : AppCompatActivity() {
                 showRecyclerCardView()
             }
         }
+        mode = selectedMode
         setActionBarTitle(title)
     }
 
