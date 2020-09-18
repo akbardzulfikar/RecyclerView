@@ -15,13 +15,9 @@ class ListHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adap
         return ListViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(listHero[position])
-    }
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) = holder.bind(listHero[position])
 
-    override fun getItemCount(): Int {
-        return listHero.size
-    }
+    override fun getItemCount(): Int = listHero.size
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(hero: Hero) {
